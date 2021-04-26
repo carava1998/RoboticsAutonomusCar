@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from __future__ import print_function
 
@@ -19,34 +19,34 @@ Moving around:
 """
 
 moveBindings = {
-		'i':(1,0,0,0),
-		'o':(1,0,0,-1),
-		'j':(0,0,0,1),
-		'l':(0,0,0,-1),
-		'u':(1,0,0,1),
-		',':(-1,0,0,0),
-		'.':(-1,0,0,1),
-		'm':(-1,0,0,-1),
-		'O':(1,-1,0,0),
-		'I':(1,0,0,0),
-		'J':(0,1,0,0),
-		'L':(0,-1,0,0),
-		'U':(1,1,0,0),
-		'<':(-1,0,0,0),
-		'>':(-1,-1,0,0),
-		'M':(-1,1,0,0),
-		't':(0,0,1,0),
-		'b':(0,0,-1,0),
-	       }
+	'i':(1,0,0,0),
+	'o':(1,0,0,-1),
+	'j':(0,0,0,1),
+	'l':(0,0,0,-1),
+	'u':(1,0,0,1),
+	',':(-1,0,0,0),
+	'.':(-1,0,0,1),
+	'm':(-1,0,0,-1),
+	'O':(1,-1,0,0),
+	'I':(1,0,0,0),
+	'J':(0,1,0,0),
+	'L':(0,-1,0,0),
+	'U':(1,1,0,0),
+	'<':(-1,0,0,0),
+	'>':(-1,-1,0,0),
+	'M':(-1,1,0,0),
+	't':(0,0,1,0),
+	'b':(0,0,-1,0),
+}
 
 speedBindings={
-		'q':(1.1,1.1),
-		'z':(.9,.9),
-		'w':(1.1,1),
-		'x':(.9,1),
-		'e':(1,1.1),
-		'c':(1,.9),
-	      }
+	'q':(1.1,1.1),
+	'z':(.9,.9),
+	'w':(1.1,1),
+	'x':(.9,1),
+	'e':(1,1.1),
+	'c':(1,.9),
+}
 
 def getKey():
 	tty.setraw(sys.stdin.fileno())
@@ -60,8 +60,8 @@ def vels(speed,turn):
 	return "currently:\tspeed %s\tturn %s " % (speed,turn)
 
 if __name__=="__main__":
-    	settings = termios.tcgetattr(sys.stdin)
-	
+	settings = termios.tcgetattr(sys.stdin)
+
 	pub = rospy.Publisher('carsim/cmd_vel', Twist, queue_size = 1)
 	rospy.init_node('teleop_twist_keyboard')
 
@@ -113,6 +113,6 @@ if __name__=="__main__":
 		twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
 		pub.publish(twist)
 
-    		termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+		termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
 
 
