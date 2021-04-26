@@ -60,6 +60,9 @@ rosrun carsim_gazebo teleop.py
 ```
 
 ## Acknowledgments and References
+
+https://github.com/duthades/car_simulation_ros_gazebo
+
 https://github.com/behnamasadi/laser_assembler
 
 https://github.com/ayushgaud/gazebo_cars
