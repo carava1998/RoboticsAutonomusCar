@@ -7,6 +7,7 @@ import rospy
 
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+from std_msgs.msg import String
 
 import sys, select, termios, tty
 
@@ -65,6 +66,7 @@ th = 0
 status = 0
 
 pub = rospy.Publisher('carsim/cmd_vel', Twist, queue_size = 1)
+pubSpeed = rospy.Publisher('carsim_speed',String ,queue_size = 1)
 
 def getKey():
 	tty.setraw(sys.stdin.fileno())
@@ -86,6 +88,8 @@ def readLaser(LaserInfo):
 		twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
 		twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
 		pub.publish(twist)
+	data = "km = " + str(x*speed*3.6)
+	pubSpeed.publish(data)
 
 rospy.Subscriber('/carsim/laser/scan', LaserScan, readLaser)
 
