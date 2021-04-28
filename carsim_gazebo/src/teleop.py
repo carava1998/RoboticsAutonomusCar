@@ -6,6 +6,7 @@ import roslib; roslib.load_manifest('carsim_gazebo')
 import rospy
 
 from geometry_msgs.msg import Twist
+from sensor_msgs.msg import LaserScan
 
 import sys, select, termios, tty
 
@@ -17,6 +18,7 @@ Moving around:
    j    k    l
    m    ,    .
 """
+move = True
 
 moveBindings = {
 	'i':(1,0,0,0),
@@ -48,6 +50,22 @@ speedBindings={
 	'c':(1,.9),
 }
 
+settings = termios.tcgetattr(sys.stdin)
+
+
+
+rospy.init_node('teleop_twist_keyboard')
+twist = Twist()
+speed = rospy.get_param("~speed", 3)
+turn = rospy.get_param("~turn", 30)
+x = 0
+y = 0
+z = 0
+th = 0
+status = 0
+
+pub = rospy.Publisher('carsim/cmd_vel', Twist, queue_size = 1)
+
 def getKey():
 	tty.setraw(sys.stdin.fileno())
 	select.select([sys.stdin], [], [], 0)
@@ -56,23 +74,26 @@ def getKey():
 	return key
 
 
+def readLaser(LaserInfo):
+	rangesList = LaserInfo.ranges
+	for i  in range(120,600):
+		if (rangesList[i] < 5):
+			move = False
+			break
+		else:
+			move= True
+	if((not move) and (x > 0)):
+		twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
+		twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
+		pub.publish(twist)
+
+rospy.Subscriber('/carsim/laser/scan', LaserScan, readLaser)
+
+
 def vels(speed,turn):
 	return "currently:\tspeed %s\tturn %s " % (speed,turn)
 
 if __name__=="__main__":
-	settings = termios.tcgetattr(sys.stdin)
-
-	pub = rospy.Publisher('carsim/cmd_vel', Twist, queue_size = 1)
-	rospy.init_node('teleop_twist_keyboard')
-
-	speed = rospy.get_param("~speed", 3)
-	turn = rospy.get_param("~turn", 30)
-	x = 0
-	y = 0
-	z = 0
-	th = 0
-	status = 0
-
 	try:
 		print(msg)
 		print(vels(speed,turn))
@@ -99,8 +120,8 @@ if __name__=="__main__":
 				if (key == '\x03'):
 					break
 
-			twist = Twist()
-			twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
+
+			twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
 			twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
 			pub.publish(twist)
 
@@ -108,7 +129,6 @@ if __name__=="__main__":
 		print(e)
 
 	finally:
-		twist = Twist()
 		twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
 		twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
 		pub.publish(twist)
