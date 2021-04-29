@@ -25,7 +25,7 @@ $ sh -c "echo 'source $WORKSPACE/devel/setup.bash' >> ~/.bashrc"
 ### Cloning packages
 ```
 $ cd $WORKSPACE/src
-$ git clone https://github.com/duthades/car_simulation_ros_gazebo.git
+$ git clone https://github.com/carava1998/RoboticsAutonomusCar.git
 ```
 ### Installing Dependencies
 ```
