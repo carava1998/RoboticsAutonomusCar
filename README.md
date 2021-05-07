@@ -1,5 +1,5 @@
 # car_simulation_ros_gazeb
-
+This Project it's based on the work made by @duthades
 A car simulation in a world using ROS and Gazebo.
 
 [![A car with laser in a Gazebo world using ROS.
