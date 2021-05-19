@@ -1,5 +1,5 @@
 # car_simulation_ros_gazeb
-
+This Project it's based on the work made by @duthades
 A car simulation in a world using ROS and Gazebo.
 
 [![A car with laser in a Gazebo world using ROS.
@@ -25,7 +25,7 @@ $ sh -c "echo 'source $WORKSPACE/devel/setup.bash' >> ~/.bashrc"
 ### Cloning packages
 ```
 $ cd $WORKSPACE/src
-$ git clone https://github.com/duthades/car_simulation_ros_gazebo.git
+$ git clone https://github.com/carava1998/RoboticsAutonomusCar.git
 ```
 ### Installing Dependencies
 ```
