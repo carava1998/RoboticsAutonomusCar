@@ -42,9 +42,9 @@ $ source devel/setup.bash
 ```
 
 ## Running Simulation
-Rviz:
+Publishers:
 ```
-roslaunch carsim_gazebo rviz.launch
+roslaunch carsim_gazebo publishers.launch
 ```
 Gazebo:
 ```
@@ -54,9 +54,17 @@ Laser Assembler
 ```
 roslaunch carsim_gazebo assembler.launch
 ```
+Rviz
+```
+roslaunch carsim_gazebo rviz.launch
+```
 Keyboard Teleop:
 ```
 rosrun carsim_gazebo teleop.py
+```
+Image processing:
+```
+rosrun carsim_gazebo imageProcessing.py
 ```
 
 ## Acknowledgments and References
