@@ -3,6 +3,7 @@ from numpy.core.numeric import False_
 import rospy
 import cv2
 from std_msgs.msg import String
+from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import sys
@@ -12,7 +13,7 @@ import glob
 import os
 
 bridge = CvBridge()
-
+pub = rospy.Publisher('carsim/cmd_vel', Twist, queue_size = 1)
 
 
 def findStopSign(cv_image):
@@ -35,6 +36,9 @@ def findStopSign(cv_image):
             cv2.waitKey(0)
     if found:
         print("found")
+        twist.linear.x=0; twist.linear.y=0; twist.linear.z=0;
+        twist.angular.x=0; twist.angular.y=0; twist.angular.z=0;
+        pub.publish(twist)
     else:
         print("Not found")
     """ cv2.imshow('sign', cv_image)  """
