@@ -18,7 +18,6 @@ pub = rospy.Publisher('carsim/cmd_vel', Twist, queue_size = 1)
 
 def publishStopPlz():
     twist = Twist()
-    print("Ajua")
     twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
     twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
     pub.publish(twist)
